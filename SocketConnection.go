@@ -10,13 +10,13 @@ type Connection struct {
 	connection    net.Conn
 }
 
-func NewSocketConnection() *Connection {
+func NewSocketConnection(ip, port, name string) *Connection {
 	return &Connection{
-		sensorDetails: *Init("192.168.1.17", "55555", "umrr0c"),
+		sensorDetails: *Init(ip, port, name),
 	}
 }
 
-func (c *Connection) DialConnection() {
+func (c *Connection) DialConnection() error {
 	var err error
 
 	address := c.sensorDetails.ipAddr + ":" + c.sensorDetails.port
@@ -24,15 +24,11 @@ func (c *Connection) DialConnection() {
 
 	if err != nil {
 		log.Error(err)
+		return err
 	} else {
 		log.Infof("-----Connection established [%s]-----", address)
 	}
-
-	c.Stream()
-
-	defer c.connection.Close()
-	log.Infof("-----Connection Exited [%s]-----", address)
-
+	return nil
 }
 
 func (c *Connection) Stream() {
@@ -41,9 +37,15 @@ func (c *Connection) Stream() {
 
 		_, err := c.connection.Read(buff)
 		if err != nil {
+			log.Error(err)
 			return
 		}
 
-		log.Infof("[%s]: %x", c.sensorDetails.name, buff)
+		log.Infof("[%s]: %x", c.sensorDetails.name, buff) //print buffer
 	}
+}
+
+func (c *Connection) Close() {
+	defer c.connection.Close()
+	log.Info("-----Connection Closed-----")
 }
