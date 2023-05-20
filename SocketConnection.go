@@ -3,16 +3,17 @@ package main
 import (
 	log "github.com/sirupsen/logrus"
 	"net"
+	"radar/StreamUtils"
+	"radar/config"
 )
 
 type Connection struct {
-	sensorDetails SensorDetails
-	connection    net.Conn
+	connection net.Conn
 }
 
 func NewSocketConnection(ip, port, name string) *Connection {
 	return &Connection{
-		sensorDetails: *Init(ip, port, name),
+		sensorDetails: *config.Init(ip, port, name),
 	}
 }
 
@@ -41,7 +42,8 @@ func (c *Connection) Stream() {
 			return
 		}
 
-		log.Infof("[%s]: %x", c.sensorDetails.name, buff) //print buffer
+		c.interceptor = StreamUtils.InitializeInterceptor(buff)
+		//log.Infof("[%s]: %x", c.sensorDetails.name, buff) //print buffer
 	}
 }
 

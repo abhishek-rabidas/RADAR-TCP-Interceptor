@@ -1,19 +1,19 @@
 package StreamUtils
 
+import "fmt"
+
 type InterceptorDetails struct {
-	startChecksum []byte
-	endChecksum   []byte
-	buffer        []byte
+	buffer []byte
 }
 
-func InitializeInterceptor(startChecksum []byte, endChecksum []byte, buffer []byte) *InterceptorDetails {
-	return &InterceptorDetails{
-		startChecksum: startChecksum,
-		endChecksum:   endChecksum,
-		buffer:        buffer,
+func InitializeInterceptor(buffer []byte) *InterceptorDetails {
+	instance := &InterceptorDetails{
+		buffer: buffer,
 	}
+	instance.GetPayload()
+	return instance
 }
 
 func (interceptor *InterceptorDetails) GetPayload() {
-
+	fmt.Printf("%x\n", interceptor.buffer)
 }
