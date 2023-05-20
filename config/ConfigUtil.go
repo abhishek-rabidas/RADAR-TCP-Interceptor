@@ -26,7 +26,11 @@ func LoadConfig() (*RadarInterceptorConfig, error) {
 
 	var config RadarInterceptorConfig = RadarInterceptorConfig{}
 
-	json.Unmarshal(configBytes, &config)
+	err = json.Unmarshal(configBytes, &config)
+	if err != nil {
+
+		return nil, err
+	}
 
 	log.Printf("\n%+v", config)
 

@@ -1,9 +1,9 @@
 package config
 
 type SensorDetails struct {
-	name   string `json:"Name"`
-	ipAddr string `json:"IP"`
-	port   string `json:"Port"`
+	Name string
+	IP   string
+	Port string
 }
 
 /*func Init(ip, port, name string) *SensorDetails {

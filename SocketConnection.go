@@ -3,24 +3,29 @@ package main
 import (
 	log "github.com/sirupsen/logrus"
 	"net"
-	"radar/StreamUtils"
 	"radar/config"
 )
 
 type Connection struct {
 	connection net.Conn
+	config     config.RadarInterceptorConfig
 }
 
-func NewSocketConnection(ip, port, name string) *Connection {
-	return &Connection{
-		sensorDetails: *config.Init(ip, port, name),
+func NewSocketConnection() (*Connection, error) {
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Error(err)
+		return nil, err
 	}
+	return &Connection{
+		config: *cfg,
+	}, nil
 }
 
 func (c *Connection) DialConnection() error {
 	var err error
 
-	address := c.sensorDetails.ipAddr + ":" + c.sensorDetails.port
+	address := c.config.Sensor.IP + ":" + c.config.Sensor.Port
 	c.connection, err = net.Dial("tcp", address)
 
 	if err != nil {
@@ -42,7 +47,6 @@ func (c *Connection) Stream() {
 			return
 		}
 
-		c.interceptor = StreamUtils.InitializeInterceptor(buff)
 		//log.Infof("[%s]: %x", c.sensorDetails.name, buff) //print buffer
 	}
 }
