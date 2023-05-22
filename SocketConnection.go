@@ -28,7 +28,10 @@ func (c *Connection) DialConnection() error {
 	var err error
 
 	address := c.config.Sensor.IP + ":" + c.config.Sensor.Port
-	c.connection, err = net.Dial("tcp", address)
+
+	raddr, err := net.ResolveTCPAddr("tcp", address)
+
+	c.connection, err = net.DialTCP("tcp", nil, raddr)
 
 	if err != nil {
 		log.Error(err)
@@ -39,7 +42,7 @@ func (c *Connection) DialConnection() error {
 	return nil
 }
 
-func (c *Connection) Stream() {
+func (c *Connection) Stream(sync bool) {
 	for {
 		buff := make([]byte, 512)
 
@@ -49,11 +52,10 @@ func (c *Connection) Stream() {
 			return
 		}
 
-		c.interceptor = StreamUtils.InitializeInterceptor(buff, &c.config.Interceptor)
+		c.interceptor = StreamUtils.InitializeInterceptor(buff, &c.config.Interceptor, sync)
 
 		c.interceptor.GetPayload()
 
-		//log.Infof("[%s]: %x", c.config.Sensor.Name, c.interceptor.GetPayload()) //print buffer
 	}
 }
 
