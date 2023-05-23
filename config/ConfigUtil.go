@@ -8,9 +8,10 @@ import (
 )
 
 type RadarInterceptorConfig struct {
-	Sensor        SensorDetails
-	Interceptor   Interceptor
-	MaxBufferSize int
+	Sensor          SensorDetails
+	Interceptor     Interceptor
+	MaxBufferSize   int
+	ExcelOutputFile string
 }
 
 func LoadConfig() (*RadarInterceptorConfig, error) {

@@ -23,7 +23,7 @@ func InitializeInterceptor(buffer []byte, interceptor *config.Interceptor, sync 
 	return instance
 }
 
-func (interceptor *InterceptorDetails) GetPayload() {
+func (interceptor *InterceptorDetails) GetPayload(id int) {
 	var isFound bool
 
 	startChecksum := strings.Join(interceptor.config.StartChecksumHex, "")
@@ -60,6 +60,7 @@ func (interceptor *InterceptorDetails) GetPayload() {
 	}
 
 	fmt.Println(payload)
+	//exportExcel.WriteStreamToExcel(payload, "./output/data.xlsx", id)
 	fmt.Println()
 
 }

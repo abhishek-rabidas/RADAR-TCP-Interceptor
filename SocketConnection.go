@@ -43,6 +43,7 @@ func (c *Connection) DialConnection() error {
 }
 
 func (c *Connection) Stream(sync bool) {
+	id := 3
 	for {
 		buff := make([]byte, 512)
 
@@ -54,7 +55,8 @@ func (c *Connection) Stream(sync bool) {
 
 		c.interceptor = StreamUtils.InitializeInterceptor(buff, &c.config.Interceptor, sync)
 
-		c.interceptor.GetPayload()
+		c.interceptor.GetPayload(id)
+		id++
 
 	}
 }
