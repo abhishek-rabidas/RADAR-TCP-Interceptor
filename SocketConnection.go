@@ -44,6 +44,7 @@ func (c *Connection) DialConnection() error {
 
 func (c *Connection) Stream(sync bool) {
 	for {
+
 		buff := make([]byte, 512)
 
 		_, err := c.connection.Read(buff)

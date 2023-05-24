@@ -2,8 +2,8 @@ package StreamUtils
 
 import (
 	"encoding/hex"
-	"fmt"
 	"radar/config"
+	"radar/parsing"
 	"strings"
 )
 
@@ -59,7 +59,7 @@ func (interceptor *InterceptorDetails) GetPayload() {
 		}
 	}
 
-	fmt.Println(payload)
-	fmt.Println()
-
+	//fmt.Printf("%s\n", payload)
+	parsing.ParseStreams(payload)
+	//fmt.Println()
 }
