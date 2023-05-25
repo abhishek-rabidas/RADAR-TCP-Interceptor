@@ -32,7 +32,7 @@ func ParseStreams(streamBytes string) []entity.Stream {
 		stream.Payload = convertToBinary(convertFormat(streamBytes[i:j])) //reversing the payload to make it big endian and then getting the binary representation
 		i = j
 
-		fmt.Printf("%+v\n", stream)
+		//fmt.Printf("%+v\n", stream)
 
 		output = append(output, stream)
 
