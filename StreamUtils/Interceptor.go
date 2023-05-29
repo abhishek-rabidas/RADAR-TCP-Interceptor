@@ -1,10 +1,9 @@
 package StreamUtils
 
 import (
-	"encoding/hex"
+	"bytes"
 	"radar/config"
-	"radar/parsing"
-	"strings"
+	"strconv"
 )
 
 type InterceptorDetails struct {
@@ -26,40 +25,33 @@ func InitializeInterceptor(buffer []byte, interceptor *config.Interceptor, sync 
 func (interceptor *InterceptorDetails) GetPayload() {
 	var isFound bool
 
-	startChecksum := strings.Join(interceptor.config.StartChecksumHex, "")
-	endChecksum := strings.Join(interceptor.config.EndChecksumHex, "")
+	var startChecksumByte = make([]byte, 4)
+	var endChecksumByte = make([]byte, 4)
 
-	var payload string = hex.EncodeToString(interceptor.buffer)
+	for idx, checksum := range interceptor.config.StartChecksumHex {
+		decodeString, _ := strconv.ParseUint(checksum, 16, 64)
 
-	//pruning the payload to get the actual payload by removing start checksum, end checksum and trailing bits (0)
+		startChecksumByte[idx] = byte(decodeString)
+	}
 
-	payload = strings.TrimRight(payload, "0")
+	for idx, checksum := range interceptor.config.EndChecksumHex {
+		decodeString, _ := strconv.ParseUint(checksum, 16, 64)
 
-	payload, isFound = strings.CutPrefix(payload, startChecksum)
+		endChecksumByte[idx] = byte(decodeString)
+	}
+
+	interceptor.buffer = bytes.TrimRight(interceptor.buffer, "\x00")
+
+	interceptor.buffer, isFound = bytes.CutPrefix(interceptor.buffer, startChecksumByte)
 	if !isFound {
 		return
 	}
 
-	payload, isFound = strings.CutSuffix(payload, endChecksum)
+	interceptor.buffer, isFound = bytes.CutSuffix(interceptor.buffer, endChecksumByte)
 	if !isFound {
 		return
 	}
 
-	if !interceptor.sync {
-		_, flag := strings.CutPrefix(payload, "02ff")
+	//fmt.Printf("%x\n", interceptor.buffer)
 
-		if flag {
-			return
-		}
-
-		_, flag = strings.CutPrefix(payload, "0734")
-
-		if flag {
-			return
-		}
-	}
-
-	//fmt.Printf("%s\n", payload)
-	parsing.ParseStreams(payload)
-	//fmt.Println()
 }
