@@ -3,12 +3,13 @@ package parsing
 import (
 	"fmt"
 	"radar/parsing/entity"
-	"strconv"
 )
 
 func ParseByteStreams(streamBytes []byte) {
 
 	i := 0
+
+	fmt.Printf("%x\n", streamBytes)
 
 	for {
 		if i+2 >= len(streamBytes) {
@@ -20,16 +21,26 @@ func ParseByteStreams(streamBytes []byte) {
 		stream.Id = streamBytes[i : i+2] //0....1
 		i += 2                           //2
 
-		stream.Length = streamBytes[i : i+1] //2
-		i += 1                               //3
+		stream.Length = streamBytes[i : i+1]
+		length := int(streamBytes[i])
+		i += 1
 
-		length, _ := strconv.Atoi(string(stream.Length)) //8
-		j := i + length                                  // 10
-		stream.Payload = streamBytes[i:j]                //3....10
-		i = j                                            //11
+		j := i + length
+		stream.Payload = streamBytes[i:j]
+		i = j
 
 		fmt.Printf("%+v\n", stream)
 
+		id := fmt.Sprintf("%x", stream.Id)
+
+		if id == "0502" {
+			ParseBinaryObjectData(stream.Payload)
+		}
+
 	}
+
+}
+
+func ParseBinaryObjectData(payload []byte) {
 
 }
