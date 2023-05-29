@@ -51,7 +51,7 @@ func ParseObjectData(payload string) {
 	var object entity.ObjectData = entity.ObjectData{}
 
 	//x_coordinate
-	result, err := strconv.ParseUint(payload[1:13], 2, 64)
+	result, err := strconv.ParseUint(payload[1:14], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -61,7 +61,7 @@ func ParseObjectData(payload string) {
 	object.X = result
 
 	//y_coordinate
-	result, err = strconv.ParseUint(payload[14:26], 2, 64)
+	result, err = strconv.ParseUint(payload[14:27], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -71,7 +71,7 @@ func ParseObjectData(payload string) {
 	object.Y = result
 
 	//X_speed
-	result, err = strconv.ParseUint(payload[27:37], 2, 64)
+	result, err = strconv.ParseUint(payload[27:38], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -81,7 +81,7 @@ func ParseObjectData(payload string) {
 	object.XSpeed = result
 
 	//Y_speed
-	result, err = strconv.ParseUint(payload[38:48], 2, 64)
+	result, err = strconv.ParseUint(payload[38:49], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -91,7 +91,7 @@ func ParseObjectData(payload string) {
 	object.YSpeed = result
 
 	//Length
-	result, err = strconv.ParseUint(payload[49:55], 2, 64)
+	result, err = strconv.ParseUint(payload[49:56], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -101,7 +101,7 @@ func ParseObjectData(payload string) {
 	object.Length = result
 
 	//ObjectId
-	result, err = strconv.ParseUint(payload[56:63], 2, 64)
+	result, err = strconv.ParseUint(payload[56:64], 2, 64)
 
 	if err != nil {
 		fmt.Println("Error:", err)
