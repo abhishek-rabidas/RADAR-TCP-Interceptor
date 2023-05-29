@@ -3,6 +3,7 @@ package StreamUtils
 import (
 	"bytes"
 	"radar/config"
+	"radar/parsing"
 	"strconv"
 )
 
@@ -51,6 +52,8 @@ func (interceptor *InterceptorDetails) GetPayload() {
 	if !isFound {
 		return
 	}
+
+	parsing.ParseByteStreams(interceptor.buffer)
 
 	//fmt.Printf("%x\n", interceptor.buffer)
 

@@ -10,11 +10,11 @@ import (
 
 func ParseStreams(streamBytes string) []entity.Stream {
 
-	i := 0
+	//i := 0
 
 	var output []entity.Stream
 
-	for {
+	/*	for {
 
 		if i+4 >= len(streamBytes) {
 			break
@@ -38,11 +38,11 @@ func ParseStreams(streamBytes string) []entity.Stream {
 
 		if stream.Id == "0502" {
 			ParseObjectData(stream.Payload)
-		} /*else if stream.Id == "0501" {
+		} else if stream.Id == "0501" {
 			ParseObjectControlData(stream.Payload)
-		}*/
+		}
 
-	}
+	}*/
 
 	return output
 }

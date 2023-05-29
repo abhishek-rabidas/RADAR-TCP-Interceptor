@@ -1,9 +1,9 @@
 package entity
 
 type Stream struct {
-	Id      string
-	Length  int
-	Payload string
+	Id      []byte
+	Length  []byte
+	Payload []byte
 }
 
 type ObjectData struct {
