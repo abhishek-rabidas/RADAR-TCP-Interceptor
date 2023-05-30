@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"net"
 	"radar/StreamUtils"
@@ -45,9 +46,11 @@ func (c *Connection) DialConnection() error {
 func (c *Connection) Stream(sync bool) {
 	for {
 
-		buff := make([]byte, 512)
+		buff := make([]byte, 100)
 
 		_, err := c.connection.Read(buff)
+
+		fmt.Printf("\n%x\n", buff)
 		if err != nil {
 			log.Error(err)
 			return

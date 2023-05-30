@@ -15,6 +15,15 @@ type ObjectData struct {
 	ObjectId uint64
 }
 
+type ObjectData2 struct {
+	X        string
+	Y        string
+	XSpeed   string
+	YSpeed   string
+	Length   string
+	ObjectId string
+}
+
 type ObjectControl struct {
 	NumberOfObjects  uint64
 	NumberOfMessages uint64
