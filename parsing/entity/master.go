@@ -7,11 +7,11 @@ type Stream struct {
 }
 
 type ObjectData struct {
-	X        uint64
-	Y        uint64
-	XSpeed   uint64
-	YSpeed   uint64
-	Length   uint64
+	X        float64
+	Y        float64
+	XSpeed   float64
+	YSpeed   float64
+	Length   float64
 	ObjectId uint64
 }
 
